@@ -70,6 +70,14 @@ app.get('/account', verifyIfAccountExists, (request, response) => {
     return response.status(200).json(request.customer)
 })
 
+app.delete('/account', verifyIfAccountExists, (request, response) => {
+    const { customer } = request
+
+    customers.splice(customers.indexOf(customer), 1)
+
+    return response.status(200).send()
+})
+
 app.get('/statement', verifyIfAccountExists, (request, response) => {
     const { customer } = request
     const { date } = request.query
