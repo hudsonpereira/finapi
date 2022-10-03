@@ -59,8 +59,13 @@ app.post('/account', (request, response) => {
 
 app.get('/statement', verifyIfAccountExists, (request, response) => {
     const { customer } = request
+    const { date } = request.query
 
-    return response.json(customer.statements)
+    const dateFormat = new Date(date)
+
+    const statements = date ? customer.statements.filter(statement => statement.created_at.toDateString() === new Date(dateFormat).toDateString()) : customer.statements
+
+    return response.json(statements)
 })
 
 app.post('/deposit', verifyIfAccountExists, (request, response) => {
