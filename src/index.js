@@ -67,7 +67,7 @@ app.put('/account', verifyIfAccountExists, (request, response) => {
 })
 
 app.get('/account', verifyIfAccountExists, (request, response) => {
-    return response.status(200).json(request.customer)
+    return response.status(200).json({...request.customer, balance: getBalance(request.customer.statements)})
 })
 
 app.delete('/account', verifyIfAccountExists, (request, response) => {
