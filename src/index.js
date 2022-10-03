@@ -57,6 +57,19 @@ app.post('/account', (request, response) => {
     return response.status(201).send()
 })
 
+app.put('/account', verifyIfAccountExists, (request, response) => {
+    const { name } = request.body
+    const { customer } = request
+    
+    customer.name = name
+
+    return response.status(200).send()
+})
+
+app.get('/account', verifyIfAccountExists, (request, response) => {
+    return response.status(200).json(request.customer)
+})
+
 app.get('/statement', verifyIfAccountExists, (request, response) => {
     const { customer } = request
     const { date } = request.query
